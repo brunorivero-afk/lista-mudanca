@@ -1,0 +1,1166 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"></head><body>
+<title>Lista da Mudança</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: resumo em faixa no topo, lista agrupada por prioridade com serviços aninhados sob o produto; editor em painel lateral (folha inferior no celular). */
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --fg:#1b2422; --muted:#5f6d69; --line:#dce3e0;
+  --accent:#1f6f5c; --accent-soft:#e1efe9;
+  --p1:#d9573b; --p2:#e2a227; --p3:#4f8f5b; --p5:#7a8aa0;
+  --warn:#9a5a00; --warn-bg:#fff3dc; --ok:#1f6f5c; --col:#e7ecea;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Inter",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --col:#161e1c; --bg:#121816; --surface:#1a2220; --fg:#e6ece9; --muted:#97a6a1; --line:#2c3734;
+  --accent:#5cc3a4; --accent-soft:#1d3530; --warn:#f0b75a; --warn-bg:#33281a; --ok:#5cc3a4; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --col:#161e1c; --bg:#121816; --surface:#1a2220; --fg:#e6ece9; --muted:#97a6a1; --line:#2c3734;
+  --accent:#5cc3a4; --accent-soft:#1d3530; --warn:#f0b75a; --warn-bg:#33281a; --ok:#5cc3a4; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0}
+.ro #addBtn,.ro .mv,.ro .lk-hint{display:none!important}
+.ro .card,.ro .lk-head,.ro .row,.ro .kid{cursor:default}
+.ro .lk-empty{pointer-events:none}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:14px;line-height:1.45}
+.wrap{max-width:1040px;margin:0 auto;padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:18px}
+h1{font-family:var(--display);font-weight:700;font-size:28px;margin:0;letter-spacing:-.01em}
+h2{font-family:var(--display);font-weight:700;font-size:18px;margin:0}
+.top{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px}
+.top p{margin:2px 0 0;color:var(--muted)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:8px 14px;border-radius:8px;font-weight:600}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn.danger{color:var(--p1);border-color:var(--p1)}
+.btn:focus-visible,.row:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stat{background:var(--surface);padding:14px 16px;display:grid;gap:2px;min-width:0}
+.stat .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.stat .val{font-family:var(--mono);font-size:20px;font-variant-numeric:tabular-nums}
+.stat .sub{font-size:12px;color:var(--muted)}
+.r2{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0 2px;border-top:1px solid var(--line)}
+.stat .lbl+.r2{margin-top:6px}
+.r2 .k{font-size:12px;color:var(--muted);font-weight:600}
+.r2 .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:17px;text-align:right;display:grid}
+.r2 .v small{font-size:12px;color:var(--accent)}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--accent)}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.loose{background:var(--warn-bg);border-radius:12px;padding:14px 16px;display:grid;gap:8px}
+.loose h2{color:var(--warn);font-size:15px}
+.loose ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.loose button{background:none;border:0;padding:0;color:var(--fg);text-decoration:underline;text-underline-offset:2px;font-weight:600}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:6px 12px;color:var(--muted);font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.filters select{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg)}
+
+.section{display:grid;gap:6px}
+.sechead{display:flex;align-items:center;gap:10px;padding:4px 2px}
+.swatch{width:26px;height:26px;border-radius:6px;display:grid;place-items:center;color:#fff;font-family:var(--mono);font-size:12px;font-weight:500}
+.sechead .sum{margin-left:auto;color:var(--muted)}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:none;color:var(--fg);padding:11px 14px}
+.row:first-child{border-top:0}
+.row:hover{background:var(--accent-soft)}
+.row.child{padding-left:38px;background:color-mix(in srgb,var(--bg) 50%,var(--surface))}
+.row.child .name::before{content:"↳ ";color:var(--muted)}
+.row.done .name{text-decoration:line-through;color:var(--muted)}
+.name{font-weight:600}
+.meta{grid-column:1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;color:var(--muted);font-size:12px}
+.price{grid-row:1/span 2;grid-column:2;text-align:right;display:grid;align-content:center;gap:2px}
+.price .t{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:15px}
+.price .m{font-size:11px;color:var(--muted)}
+.chip{display:inline-block;padding:1px 7px;border-radius:999px;border:1px solid var(--line);font-size:11px;font-weight:600;white-space:nowrap}
+.chip.avista{border-color:var(--fg);color:var(--fg)}
+.chip.parcelado{border-color:var(--accent);color:var(--accent)}
+.chip.definir{border-style:dashed;color:var(--warn);border-color:var(--warn)}
+.chip.ok{background:var(--accent-soft);border-color:transparent;color:var(--ok)}
+.chip.est{color:var(--muted)}
+.chip.warn{background:var(--warn-bg);border-color:transparent;color:var(--warn)}
+
+.empty{padding:28px;text-align:center;color:var(--muted)}
+.note{color:var(--muted);font-size:12px}
+
+/* quadro */
+.board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(230px,1fr);gap:12px;overflow-x:auto;padding-bottom:10px;align-items:start}
+@media (max-width:760px){.board{grid-auto-columns:84%;scroll-snap-type:x mandatory}.bcol{scroll-snap-align:start}}
+.bcol{background:var(--col);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;min-height:220px;border-top:4px solid var(--c);min-width:0}
+.bcol.over{outline:2px dashed var(--accent);outline-offset:-2px}
+.bhead{display:grid;gap:2px;padding:2px 4px 6px}
+.bhead .t{display:flex;align-items:center;gap:8px}
+.bhead h2{font-size:16px}
+.bhead .cnt{margin-left:auto;font-size:12px;color:var(--muted);font-weight:600}
+.bhead .s{font-size:12px;color:var(--muted)}
+.bhead .s b{font-family:var(--mono);font-weight:500;color:var(--fg);font-size:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:6px;cursor:grab;min-width:0}
+.card:hover{border-color:var(--accent)}
+.card.dragging{opacity:.35}
+.card.done .cname{text-decoration:line-through;color:var(--muted)}
+.ctop{display:flex;gap:8px;align-items:baseline;justify-content:space-between}
+.cname{font-weight:600;min-width:0}
+.cval{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cmeta{display:flex;flex-wrap:wrap;gap:5px;align-items:center;font-size:12px;color:var(--muted)}
+.kids{display:grid;gap:2px;border-top:1px dashed var(--line);padding-top:6px}
+.kid{display:flex;justify-content:space-between;gap:8px;border:0;background:none;color:var(--muted);font-size:12px;padding:2px 0;text-align:left}
+.kid:hover{color:var(--fg)}
+.kid span:first-child::before{content:"↳ "}
+.cfoot{display:flex;justify-content:space-between;align-items:center}
+.mv{border:1px solid var(--line);background:none;color:var(--muted);border-radius:6px;padding:0 8px;font-size:13px;line-height:22px}
+.mv:hover{color:var(--accent);border-color:var(--accent)}
+.mv[disabled]{visibility:hidden}
+.drop-empty{color:var(--muted);font-size:12px;text-align:center;padding:18px 6px;border:1px dashed var(--line);border-radius:8px;margin:0}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px;z-index:30}
+
+/* links */
+#list .section+.section{margin-top:16px}
+.lkitem{border-top:1px solid var(--line);padding:10px 14px;display:grid;gap:6px}
+.lkitem:first-child{border-top:0}
+.lk-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 10px;border:0;background:none;color:var(--fg);padding:0;text-align:left}
+.lk-head:hover .name{color:var(--accent)}
+.lk{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:4px 12px;align-items:center;padding:8px 10px;border-radius:8px;background:var(--bg)}
+.lk.pick{background:var(--accent-soft)}
+.lk-main{display:grid;gap:2px;min-width:0}
+.lk-loja{font-weight:600;font-size:13px;overflow-wrap:anywhere}
+.lk-val{text-align:right;display:grid;font-size:14px}
+.lk-val small{font-size:11px;color:var(--muted)}
+.lk-go{padding:5px 12px;text-decoration:none;font-size:13px;white-space:nowrap}
+.lk-empty{border:1px dashed var(--line);background:none;color:var(--muted);border-radius:8px;padding:8px 10px;text-align:left;font-size:13px}
+.lk-empty:hover{color:var(--accent);border-color:var(--accent)}
+@media (max-width:520px){.lk{grid-template-columns:minmax(0,1fr) auto}.lk-go{grid-column:1/-1;text-align:center}}
+
+/* editor */
+.overlay{position:fixed;inset:0;background:rgba(10,20,18,.45);z-index:20;display:flex;justify-content:flex-end}
+.panel{background:var(--surface);width:min(560px,100%);height:100%;overflow-y:auto;padding:20px max(18px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) 18px;display:grid;gap:16px;align-content:start}
+@media (max-width:600px){.overlay{align-items:flex-end}.panel{height:92%;border-radius:16px 16px 0 0;padding-left:max(16px,env(safe-area-inset-left,0px))}}
+.panel header{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.grid .full{grid-column:1/-1}
+label{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--muted)}
+input,select,textarea{font:inherit;font-size:14px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;min-width:0}
+textarea{min-height:56px;resize:vertical}
+fieldset{border:1px solid var(--line);border-radius:10px;padding:12px;margin:0;display:grid;gap:10px;min-width:0}
+legend{font-weight:700;font-family:var(--display);padding:0 6px}
+.quote{display:grid;grid-template-columns:auto minmax(0,1.3fr) minmax(0,1fr) auto;gap:8px;align-items:center;border-bottom:1px dashed var(--line);padding-bottom:10px}
+.quote .wide{grid-column:2/-1}
+.quote input[type=radio]{width:auto}
+.x{border:0;background:none;color:var(--muted);font-size:18px;padding:4px 8px}
+.links{display:flex;flex-wrap:wrap;gap:6px 14px}
+.links label{display:flex;gap:6px;align-items:center;font-weight:500;color:var(--fg)}
+.links input{width:auto}
+.warnbox{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:10px 12px;font-size:13px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
+.calc{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted)}
+.calc b{color:var(--fg);font-family:var(--mono);font-weight:500}
+@media (prefers-reduced-motion:no-preference){.panel{animation:slide .18s ease-out}@keyframes slide{from{transform:translateY(12px);opacity:.6}}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div>
+      <h1>Lista da Mudança</h1>
+      <p id="subTxt">Produtos e serviços da casa nova, por prioridade. Toque num item pra cotar, ligar ou mudar a forma de pagar.</p>
+    </div>
+    <button class="btn primary" id="addBtn" type="button">+ Novo item</button>
+  </div>
+
+  <div class="stats" id="stats"></div>
+  <p class="note" id="totLine" style="margin:-8px 0 0"></p>
+
+  <div class="filters">
+    <div class="seg" id="viewSeg" role="group" aria-label="Visualização">
+      <button type="button" data-view="board">Quadro</button>
+      <button type="button" data-view="list">Lista</button>
+      <button type="button" data-view="links">Links</button>
+    </div>
+    <div class="seg" id="prioSeg" role="group" aria-label="Prioridade"></div>
+    <select id="tipoSel" aria-label="Tipo">
+      <option value="all">Produtos e serviços</option>
+      <option value="produto">Só produtos</option>
+      <option value="servico">Só serviços</option>
+    </select>
+    <select id="pagSel" aria-label="Pagamento">
+      <option value="all">Qualquer pagamento</option>
+      <option value="avista">À vista</option>
+      <option value="parcelado">Parcelado</option>
+      <option value="definir">A definir</option>
+    </select>
+    <select id="statusSel" aria-label="Status">
+      <option value="all">Qualquer status</option>
+      <option value="a_cotar">A cotar</option>
+      <option value="cotado">Cotado</option>
+      <option value="fechado">Fechado</option>
+      <option value="concluido">Concluído</option>
+    </select>
+  </div>
+
+  <div id="list"><div class="list"><div class="empty" id="loadMsg">Carregando a lista…</div></div></div>
+  <p class="note">"est." = valor estimado da planilha. "cotado" = preço comprovado por uma cotação escolhida (com loja e link).</p>
+</div>
+
+<div class="overlay" id="overlay" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>window.SNAPSHOT={data:"10/11/2026",items:[{"id":"cabeceira","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Conferir largura da cama (140 ou 160 cm)",
+      "link": "https://www.amazon.com.br/Cabeceira-Painel-Casal-Estofada-Suede/dp/B093QB6YPG",
+      "loja": "Amazon — painel estofado casal suede bege",
+      "valor": ""
+    },
+    {
+      "cond": "Painéis completos de ~R$ 150 a R$ 500",
+      "link": "https://lista.mercadolivre.com.br/painel-estofado-cama-casal",
+      "loja": "Mercado Livre — painel estofado casal (lista)",
+      "valor": ""
+    }
+  ],
+  "descricao": "Cabeceira da cama",
+  "escolhida": null,
+  "estimado": 100,
+  "local": "Quarto casal",
+  "obs": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 4,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"cadeiras","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Kit de 8 por ~R$ 672,40; empilhável, até 154 kg",
+      "link": "https://www.mercadolivre.com.br/cadeira-de-plastico-atlntida-branco-eco-8-un-tramontina/p/MLB44419780",
+      "loja": "Mercado Livre — Tramontina Atlântida Eco, kit 8",
+      "valor": 84.05
+    },
+    {
+      "cond": "",
+      "link": "https://lista.mercadolivre.com.br/kit-8-cadeiras-plastico",
+      "loja": "Mercado Livre — kit 8 cadeiras plástico (lista)",
+      "valor": ""
+    }
+  ],
+  "descricao": "Cadeiras",
+  "escolhida": null,
+  "estimado": 82.375,
+  "local": "Churrasqueira",
+  "obs": "Unitário ajustado pra 82,375 pro total fechar em R$ 659 como na planilha.",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 4,
+  "qtde": 8,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"caminhao","d":{
+  "alerta": "",
+  "cotacoes": [],
+  "descricao": "Caminhão de mudança",
+  "escolhida": null,
+  "estimado": 700,
+  "local": "-",
+  "obs": "",
+  "pagamento": "avista",
+  "parcelas": "",
+  "prioridade": 1,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": []
+}
+},{"id":"chaveiro","d":{
+  "alerta": "",
+  "cotacoes": [],
+  "descricao": "Chaveiro",
+  "escolhida": null,
+  "estimado": 10,
+  "local": "Casa toda",
+  "obs": "",
+  "pagamento": "avista",
+  "parcelas": "",
+  "prioridade": 1,
+  "qtde": 16,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": []
+}
+},{"id":"descarga","d":{
+  "alerta": "",
+  "cotacoes": [],
+  "descricao": "Vaso Sanitário (edílica)",
+  "escolhida": null,
+  "estimado": 300,
+  "local": "Banheiros",
+  "obs": "Peça incluída nos R$ 300.",
+  "pagamento": "avista",
+  "parcelas": "",
+  "prioridade": 2,
+  "qtde": 1,
+  "quem": "Marido Adriana",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": []
+}
+},{"id":"eletricista","d":{
+  "alerta": "",
+  "cotacoes": [],
+  "descricao": "Eletricista (chuveiro / luminárias)",
+  "escolhida": null,
+  "estimado": 50,
+  "local": "Banheiros / jardim",
+  "obs": "",
+  "pagamento": "avista",
+  "parcelas": "",
+  "prioridade": 1,
+  "qtde": 7,
+  "quem": "Virgílio",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": [
+    "lum-ext",
+    "luminarias"
+  ]
+}
+},{"id":"espreguicadeira","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "12x sem juros num anúncio; preços de R$ 370 a R$ 960 conforme vendedor",
+      "link": "https://lista.mercadolivre.com.br/espreguicadeira-leblon-92256010-tramontina",
+      "loja": "Mercado Livre — Tramontina Leblon branca",
+      "valor": 649.89
+    },
+    {
+      "cond": "",
+      "link": "https://lista.mercadolivre.com.br/espreguicadeira-piscina-tramontina-jardim",
+      "loja": "Mercado Livre — espreguiçadeira Tramontina (lista)",
+      "valor": ""
+    }
+  ],
+  "descricao": "Espreguiçadeira",
+  "escolhida": null,
+  "estimado": 480,
+  "local": "Piscina",
+  "obs": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 4,
+  "qtde": 3,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"formigueiro","d":{
+  "alerta": "",
+  "cotacoes": [],
+  "descricao": "Formigueiro",
+  "escolhida": null,
+  "estimado": 400,
+  "local": "Jardim",
+  "obs": "",
+  "pagamento": "avista",
+  "parcelas": "",
+  "prioridade": 3,
+  "qtde": 1,
+  "quem": "Formiga",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": []
+}
+},{"id":"inst-ar","d":{
+  "alerta": "",
+  "cotacoes": [],
+  "descricao": "Instalação de ar-condicionado",
+  "escolhida": null,
+  "estimado": 1000,
+  "local": "Sala / quarto",
+  "obs": "Os 2 aparelhos já estão comprados.",
+  "pagamento": "avista",
+  "parcelas": "",
+  "prioridade": 1,
+  "qtde": 2,
+  "quem": "Mineiro",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": []
+}
+},{"id":"inst-piso","d":{
+  "alerta": "",
+  "cotacoes": [],
+  "descricao": "Instalação do piso vinílico",
+  "escolhida": null,
+  "estimado": 1500,
+  "local": "Quarto casal / edícula / sala",
+  "obs": "",
+  "pagamento": "avista",
+  "parcelas": "",
+  "prioridade": 1,
+  "qtde": 1,
+  "quem": "Marido Adriana",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": [
+    "piso"
+  ]
+}
+},{"id":"inst-portao","d":{
+  "alerta": "",
+  "cotacoes": [],
+  "descricao": "Instalação do portão eletrônico",
+  "escolhida": null,
+  "estimado": 600,
+  "local": "Casa",
+  "obs": "",
+  "pagamento": "avista",
+  "parcelas": "",
+  "prioridade": 3,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": [
+    "portao"
+  ]
+}
+},{"id":"inst-tv","d":{
+  "alerta": "",
+  "cotacoes": [],
+  "descricao": "Suporte da TV externa",
+  "escolhida": null,
+  "estimado": 80,
+  "local": "Externa",
+  "obs": "Valor estimado (não veio da planilha). Pode ser o Virgílio junto com o eletricista.",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 2,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": [
+    "tv32",
+    "suporte-tv"
+  ]
+}
+},{"id":"lampadas","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Kit de 10 por ~R$ 34,99 (sobram 4)",
+      "link": "https://www.amazon.com.br/Lampada-6500k-Branco-Frio-Bivolt/dp/B0879Y4CY5",
+      "loja": "Amazon — kit 10 Elgin LED 9W 6500K",
+      "valor": 3.5
+    },
+    {
+      "cond": "Kit de 10 por ~R$ 40,90",
+      "link": "https://www.mercadolivre.com.br/kit-10-lmpadas-bulbo-led-9w-elgin-a60-e27-luz-branco-frio/p/MLB42476522",
+      "loja": "Mercado Livre — kit 10 Elgin LED 9W",
+      "valor": 4.09
+    }
+  ],
+  "descricao": "Lâmpadas",
+  "escolhida": null,
+  "estimado": 15,
+  "local": "Casa toda",
+  "obs": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 1,
+  "qtde": 6,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"lum-ext","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Bivolt, 3000K, pra muro/jardim",
+      "link": "https://www.amazon.com.br/Arandela-Externa-Fachos-Bivolt-Fachada/dp/B0FQXM16TS",
+      "loja": "Amazon — arandela LED meia-lua 8W IP65",
+      "valor": ""
+    },
+    {
+      "cond": "Nota 4,4 (114 avaliações)",
+      "link": "https://www.amazon.com.br/Arandela-externa-moderna-lumin%C3%A1ria-exterior/dp/B0CFGSH45J",
+      "loja": "Amazon — arandela LED 30 cm 9W IP65",
+      "valor": ""
+    }
+  ],
+  "descricao": "Luminárias externas",
+  "escolhida": null,
+  "estimado": 40,
+  "local": "Jardim",
+  "obs": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 2,
+  "qtde": 4,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"luminarias","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Sobrepor, quadrado, luz neutra",
+      "link": "https://www.amazon.com.br/Painel-Plafon-Quadrado-Sobrepor-Bivolt/dp/B08SC11ZDF",
+      "loja": "Amazon — plafon LED 24W Taschibra 4000K",
+      "valor": 35.9
+    },
+    {
+      "cond": "Luz branca fria",
+      "link": "https://www.amazon.com.br/Lumin%C3%A1ria-Led-Plafon-Quadrada-Sobrepor/dp/B0FYSKHC1M",
+      "loja": "Amazon — plafon LED 24W Noll 6500K",
+      "valor": 34.97
+    },
+    {
+      "cond": "",
+      "link": "https://www.mercadolivre.com.br/elgin-plafon-painel-quadrado-sobrepor-24w-branco-frio-6500k-estrutura-branco-frio/p/MLB23173235",
+      "loja": "Mercado Livre — plafon Elgin 24W 6500K",
+      "valor": ""
+    }
+  ],
+  "descricao": "Luminárias internas",
+  "escolhida": null,
+  "estimado": 60,
+  "local": "Suíte / sala / quarto Beth / edícula",
+  "obs": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 1,
+  "qtde": 5,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"mesinhas","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Kit já vem com as 2. Off white",
+      "link": "https://www.mercadolivre.com.br/kit-2-mesa-de-cabeceira-suspensa-de-parede-eros-60cm-com-gaveta-off-white-para-quarto/p/MLB40870862",
+      "loja": "Mercado Livre — kit 2 mesas suspensas 60 cm, 2 gavetas",
+      "valor": ""
+    },
+    {
+      "cond": "Kit com 2, pés de madeira",
+      "link": "https://www.amazon.com.br/Conjunto-cabeceira-madeira-gavetas-Alamo/dp/B0CB9CMYVC",
+      "loja": "Amazon — kit 2 mesas retrô Alamo, 2 gavetas",
+      "valor": ""
+    }
+  ],
+  "descricao": "Mesinhas de cabeceira",
+  "escolhida": null,
+  "estimado": 200,
+  "local": "Quarto casal",
+  "obs": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 2,
+  "qtde": 2,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"montador","d":{
+  "alerta": "Os 4 armários já estão comprados? Se não, entram como produto.",
+  "cotacoes": [],
+  "descricao": "Montador (4 armários)",
+  "escolhida": null,
+  "estimado": 1000,
+  "local": "Banheiros",
+  "obs": "",
+  "pagamento": "avista",
+  "parcelas": "",
+  "prioridade": 1,
+  "qtde": 1,
+  "quem": "Marido Adriana",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": []
+}
+},{"id":"piso","d":{
+  "alerta": "Metragem aproximada (cerca de 40 m²): medir antes de comprar. Quem compra ainda está como '?'.",
+  "cotacoes": [
+    {
+      "cond": "R$ 85,90/m² em promoção (busca 10/11, conferir). Comprar ~10% a mais pra perdas",
+      "link": "https://produto.mercadolivre.com.br/MLB-3109990855-piso-vinilico-rigido-4mm-clicado-regua-por-m-tubrax-_JM",
+      "loja": "Mercado Livre — Tubrax rígido 4 mm clicado (por m²)",
+      "valor": 85.9
+    },
+    {
+      "cond": "De R$ 85 a R$ 255 por m² conforme marca",
+      "link": "https://lista.mercadolivre.com.br/piso-vinilico-click",
+      "loja": "Mercado Livre — piso vinílico click (lista)",
+      "valor": ""
+    }
+  ],
+  "descricao": "Piso vinílico",
+  "escolhida": null,
+  "estimado": 100,
+  "local": "Quarto casal / edícula / sala",
+  "obs": "Quantidade em m². Estimado mantido em R$ 4.000 no total (R$ 100/m²).",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 1,
+  "qtde": 40,
+  "quem": "?",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"portao","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Até 450 kg, com 3 m de cremalheira e 2 controles. Só serve se o portão for de correr",
+      "link": "https://produto.mercadolivre.com.br/MLB-876937621-kit-motor-ppa-dz-hub-14-hp-porto-deslizante-450kg-_JM",
+      "loja": "Mercado Livre — PPA DZ Hub 1/4 HP deslizante",
+      "valor": ""
+    },
+    {
+      "cond": "Até 400 kg, com 3 m de cremalheira",
+      "link": "https://produto.mercadolivre.com.br/MLB-679490571-kit-motor-de-porto-eletrnico-deslizante-ppa-dz-rio-14-hp-_JM",
+      "loja": "Mercado Livre — PPA DZ Rio 1/4 HP deslizante",
+      "valor": ""
+    }
+  ],
+  "descricao": "Portão eletrônico",
+  "escolhida": null,
+  "estimado": 650,
+  "local": "Casa",
+  "obs": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 3,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"reforma-moveis","d":{
+  "alerta": "",
+  "cotacoes": [],
+  "descricao": "Reforma de móveis / retoques",
+  "escolhida": null,
+  "estimado": 1000,
+  "local": "Casa toda",
+  "obs": "Lounge / sala Beth / cadeiras (8) / móvel aleatório (3) / mesa redonda de ferro / banco de praça",
+  "pagamento": "avista",
+  "parcelas": "",
+  "prioridade": 2,
+  "qtde": 1,
+  "quem": "Virgílio",
+  "status": "a_cotar",
+  "tipo": "servico",
+  "vinculos": []
+}
+},{"id":"suporte-tv","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Até 50 kg, 2,9 cm da parede (conferir preço)",
+      "link": "https://www.amazon.com.br/Suporte-Parede-Elg-N01V4-Preto/dp/B0767QQG67",
+      "loja": "Amazon — ELG N01V4 fixo 32\"–77\"",
+      "valor": 44.54
+    },
+    {
+      "cond": "32\" a 55\", até 35 kg",
+      "link": "https://produto.mercadolivre.com.br/MLB-1360261616-suporte-para-tv-de-parede-32-a-55-fixo-slim-sbrp404-_JM",
+      "loja": "Mercado Livre — Brasforma SBRP404 fixo slim",
+      "valor": ""
+    }
+  ],
+  "descricao": "Suporte de parede para TV 32\"",
+  "escolhida": null,
+  "estimado": 80,
+  "local": "Externa",
+  "obs": "Valor estimado (não veio da planilha). Cotar.",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 2,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"tinta-azulejo","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Eucatex ~R$ 74,95; Futura ~R$ 55,92. Rende ~4,5 m² por lata: medir o azulejo",
+      "link": "https://lista.mercadolivre.com.br/tinta-epoxi-azulejo",
+      "loja": "Mercado Livre — tinta epóxi base água 900 ml",
+      "valor": 74.95
+    },
+    {
+      "cond": "",
+      "link": "https://www.amazon.com.br/tinta-epoxi-azulejo/s?k=tinta+epoxi+azulejo",
+      "loja": "Amazon — tinta epóxi azulejo (busca)",
+      "valor": ""
+    }
+  ],
+  "descricao": "Tinta para azulejo",
+  "escolhida": null,
+  "estimado": 70,
+  "local": "Cozinha",
+  "obs": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 1,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"tinta-parede","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Interna/externa, até 170 m². A partir de 12x de R$ 41,31 (conferir)",
+      "link": "https://www.mercadolivre.com.br/tinta-acrilica-fosca-rende-muito-coral-18l-branco-standard/p/MLB27632051",
+      "loja": "Mercado Livre — Coral Rende Muito 18L branco",
+      "valor": 427.9
+    },
+    {
+      "cond": "",
+      "link": "https://www.amazon.com.br/Tinta-Acr%C3%ADlica-Fosco-Rende-Branco/dp/B07G5KNFBM",
+      "loja": "Amazon — Coral Rende Muito 18L branco",
+      "valor": ""
+    }
+  ],
+  "descricao": "Tinta para parede",
+  "escolhida": null,
+  "estimado": 500,
+  "local": "Muro / edícula / muro da piscina",
+  "obs": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 1,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"tv32","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "12x de R$ 74,08 sem juros (busca 10/11, conferir)",
+      "link": "https://www.amazon.com.br/smart-tv-32-polegadas/s?k=smart+tv+32+polegadas",
+      "loja": "Amazon — Hisense 32A4NV (busca)",
+      "valor": 888.96
+    },
+    {
+      "cond": "Modelo mais barato visto (~R$ 790 a R$ 950). Conferir",
+      "link": "https://www.amazon.com.br/HQ-bordas-Androind-design-HQS32NKHM/dp/B0DGB2FM65",
+      "loja": "Amazon — HQ 32\" HQS32NKHM",
+      "valor": ""
+    },
+    {
+      "cond": "Ex.: Multi Android 12x de R$ 74,83 sem juros",
+      "link": "https://lista.mercadolivre.com.br/tv-32-polegadas-fretes-gratis",
+      "loja": "Mercado Livre — TVs 32\" frete grátis",
+      "valor": 897.96
+    }
+  ],
+  "descricao": "TV 32\"",
+  "escolhida": null,
+  "estimado": 800,
+  "local": "Externa",
+  "obs": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 2,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+}]};</script>
+<script>
+const BRL = v => (Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const STATUS = {a_cotar:'A cotar',cotado:'Cotado',fechado:'Fechado',concluido:'Concluído'};
+const PAG = {avista:'À vista',parcelado:'Parcelado',definir:'Pagamento a definir'};
+const PRIO_COLOR = p => ({1:'var(--p1)',2:'var(--p2)',3:'var(--p3)'})[p] || 'var(--p5)';
+const PRIO_NAME = {1:'Antes da mudança',2:'Primeiras semanas',3:'Pode esperar',4:'Desejo'};
+const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+let items = [], col = null, loaded = false;
+const f = {prio:'all', tipo:'all', pag:'all', status:'all'};
+let view = 'board';
+try{ view = localStorage.getItem('lm_view') || 'board'; }catch(e){}
+const prioOf = it => Number(it.prioridade)||5;
+let draft = null, delArmed = false;
+
+const chosen = it => { const q = it.cotacoes||[]; const i = it.escolhida; return (typeof i==='number' && i>=0 && q[i]) ? q[i] : null; };
+const unit = it => { const q = chosen(it); return q ? Number(q.valor)||0 : Number(it.estimado)||0; };
+const total = it => unit(it) * (Number(it.qtde)||0);
+const monthly = it => it.pagamento==='parcelado' && Number(it.parcelas)>0 ? total(it)/Number(it.parcelas) : 0;
+const byId = id => items.find(i=>i.id===id);
+
+function renderStats(){
+  const cards = boardCols().map(p=>{
+    const inP = items.filter(i=>prioOf(i)===p);
+    const av = inP.filter(i=>i.pagamento!=='parcelado').reduce((a,i)=>a+total(i),0);
+    const pa = inP.filter(i=>i.pagamento==='parcelado').reduce((a,i)=>a+total(i),0);
+    return `<div class="stat" style="border-top:4px solid ${PRIO_COLOR(p)}">
+      <span class="lbl">${p} · ${PRIO_NAME[p]||'Prioridade '+p}</span>
+      <div class="r2"><span class="k">À vista</span><span class="v">${BRL(av)}</span></div>
+      <div class="r2"><span class="k">A prazo</span><span class="v">${BRL(pa)}<small>12x de ${BRL(pa/12)}</small></span></div>
+    </div>`;
+  }).join('');
+  document.getElementById('stats').innerHTML = cards;
+  const avT = items.filter(i=>i.pagamento!=='parcelado').reduce((a,i)=>a+total(i),0);
+  const paT = items.filter(i=>i.pagamento==='parcelado').reduce((a,i)=>a+total(i),0);
+  document.getElementById('totLine').innerHTML = `Todas as etapas: à vista <b class="num">${BRL(avT)}</b> · a prazo <b class="num">${BRL(paT)}</b> (12x de <b class="num">${BRL(paT/12)}</b>)`;
+}
+
+function rowHTML(it, child){
+  const q = chosen(it);
+  const pag = it.pagamento || 'definir';
+  const n = Number(it.parcelas)||0;
+  const pagTxt = pag==='parcelado' && n ? `${n}x` : PAG[pag];
+  return `<button type="button" class="row${child?' child':''}${it.status==='concluido'?' done':''}" data-open="${esc(it.id)}">
+    <span class="name">${esc(it.descricao)}${Number(it.qtde)>1?` <span class="num note">×${it.qtde}</span>`:''}</span>
+    <span class="price"><span class="t">${BRL(total(it))}</span>${pag==='parcelado'&&n?`<span class="m num">${n}x ${BRL(monthly(it))}</span>`:''}</span>
+    <span class="meta">
+      ${child?'':`<span>${esc(it.local||'')}</span>`}
+      <span class="chip ${pag}">${pagTxt}</span>
+      ${q?`<span class="chip ok">cotado · ${esc(q.loja||'loja')}</span>`:`<span class="chip est">est.</span>`}
+      ${it.status&&it.status!=='a_cotar'?`<span class="chip">${STATUS[it.status]}</span>`:''}
+      ${it.quem?`<span>${esc(it.quem)}</span>`:''}
+    </span></button>`;
+}
+
+function passes(it, ignorePrio){
+  return (ignorePrio||f.prio==='all'||String(it.prioridade)===f.prio)
+    && (f.tipo==='all'||it.tipo===f.tipo)
+    && (f.pag==='all'||(it.pagamento||'definir')===f.pag)
+    && (f.status==='all'||(it.status||'a_cotar')===f.status);
+}
+
+function renderList(){
+  const host = document.getElementById('list');
+  if(!loaded) return;
+  if(!items.length){ host.innerHTML = `<div class="list"><div class="empty">Nenhum item ainda. Use <b>+ Novo item</b> pra começar.</div></div>`; return; }
+  if(view==='board') return renderBoard(host);
+  if(view==='links') return renderLinks(host);
+  const vis = items.filter(passes);
+  const products = new Set(items.filter(i=>i.tipo==='produto').map(i=>i.id));
+  // serviço aninhado sob o primeiro produto ligado que estiver visível
+  const nestedUnder = {};
+  vis.forEach(s=>{ if(s.tipo!=='servico') return;
+    const sp = Number(s.prioridade)||5;
+    const p = (s.vinculos||[]).find(id=>products.has(id) && vis.some(v=>v.id===id && (Number(v.prioridade)||5)===sp));
+    if(p) nestedUnder[s.id]=p; });
+  const prios = [...new Set(vis.map(i=>Number(i.prioridade)||5))].sort((a,b)=>a-b);
+  const order = (a,b)=> (a.tipo===b.tipo?0:a.tipo==='produto'?-1:1) || total(b)-total(a);
+  host.innerHTML = prios.length ? prios.map(p=>{
+    const top = vis.filter(i=>(Number(i.prioridade)||5)===p && !nestedUnder[i.id]).sort(order);
+    let rows='', sub=0;
+    top.forEach(it=>{ rows+=rowHTML(it,false); sub+=total(it);
+      vis.filter(s=>nestedUnder[s.id]===it.id).forEach(s=>{ rows+=rowHTML(s,true); sub+=total(s); }); });
+    return `<section class="section"><div class="sechead"><span class="swatch" style="background:${PRIO_COLOR(p)}">P${p}</span><h2>${PRIO_NAME[p]||'Prioridade '+p}</h2><span class="sum num">${BRL(sub)}</span></div><div class="list">${rows}</div></section>`;
+  }).join('') : `<div class="list"><div class="empty">Nada com esses filtros.</div></div>`;
+}
+
+/* ---------- quadro ---------- */
+function cardHTML(it, kids){
+  const q = chosen(it), pag = it.pagamento||'definir', n = Number(it.parcelas)||0;
+  const p = prioOf(it), cols = boardCols();
+  const i = cols.indexOf(p);
+  const kidsTotal = kids.reduce((a,s)=>a+total(s),0);
+  return `<article class="card${it.status==='concluido'?' done':''}" draggable="true" data-id="${esc(it.id)}" data-open="${esc(it.id)}" tabindex="0">
+    <div class="ctop"><span class="cname">${esc(it.descricao)}${Number(it.qtde)>1?` <span class="num note">×${it.qtde}</span>`:''}</span><span class="cval">${BRL(total(it))}</span></div>
+    <div class="cmeta">
+      <span class="chip ${pag}">${pag==='parcelado'&&n?`${n}x ${BRL(monthly(it))}`:PAG[pag]}</span>
+      ${q?`<span class="chip ok">cotado</span>`:`<span class="chip est">est.</span>`}
+      ${it.status&&it.status!=='a_cotar'?`<span class="chip">${STATUS[it.status]}</span>`:''}
+      ${it.tipo==='servico'?`<span>serviço${it.quem?' · '+esc(it.quem):''}</span>`:''}
+    </div>
+    ${kids.length?`<div class="kids">${kids.map(s=>`<button type="button" class="kid" data-open="${esc(s.id)}"><span>${esc(s.descricao)}</span><span class="num">${BRL(total(s))}</span></button>`).join('')}<div class="kid" style="color:var(--fg)"><span style="font-weight:600">com serviços</span><span class="num">${BRL(total(it)+kidsTotal)}</span></div></div>`:''}
+    <div class="cfoot">
+      <button type="button" class="mv" data-move="${esc(it.id)}" data-to="${cols[i-1]??''}" ${i>0?'':'disabled'} aria-label="Mover para a etapa anterior">←</button>
+      <span class="note">${esc(it.local||'')}</span>
+      <button type="button" class="mv" data-move="${esc(it.id)}" data-to="${cols[i+1]??''}" ${i<cols.length-1?'':'disabled'} aria-label="Mover para a próxima etapa">→</button>
+    </div>
+  </article>`;
+}
+function boardCols(){ return [...new Set([1,2,3,4,...items.map(prioOf)])].sort((a,b)=>a-b); }
+function renderBoard(host){
+  const vis = items.filter(i=>passes(i,true));
+  const products = new Set(items.filter(i=>i.tipo==='produto').map(i=>i.id));
+  const nested = {};
+  vis.forEach(s=>{ if(s.tipo!=='servico') return;
+    const p = (s.vinculos||[]).find(id=>products.has(id) && vis.some(v=>v.id===id && prioOf(v)===prioOf(s)));
+    if(p) nested[s.id]=p; });
+  const order = (a,b)=> (a.tipo===b.tipo?0:a.tipo==='produto'?-1:1) || total(b)-total(a);
+  host.innerHTML = `<div class="board">${boardCols().map(p=>{
+    const inCol = vis.filter(i=>prioOf(i)===p);
+    const top = inCol.filter(i=>!nested[i.id]).sort(order);
+    const av = inCol.filter(i=>i.pagamento!=='parcelado').reduce((a,i)=>a+total(i),0);
+    const pa = inCol.filter(i=>i.pagamento==='parcelado').reduce((a,i)=>a+total(i),0);
+    return `<section class="bcol" data-col="${p}" style="--c:${PRIO_COLOR(p)}">
+      <div class="bhead"><div class="t"><span class="swatch" style="background:${PRIO_COLOR(p)}">${p}</span><h2>${PRIO_NAME[p]||'Prioridade '+p}</h2><span class="cnt">${inCol.length}</span></div>
+      <div class="s">À vista <b>${BRL(av)}</b></div>
+      <div class="s">A prazo <b>${BRL(pa)}</b></div>
+      <div class="s" style="color:var(--accent)">12x de ${BRL(pa/12)}</div></div>
+      ${top.length?top.map(it=>cardHTML(it, inCol.filter(s=>nested[s.id]===it.id).sort(order))).join(''):'<p class="drop-empty">Arraste itens pra cá</p>'}
+    </section>`;
+  }).join('')}</div>`;
+}
+
+/* ---------- links ---------- */
+function renderLinks(host){
+  const vis = items.filter(i=>passes(i));
+  const withLink = vis.filter(i=>(i.cotacoes||[]).some(c=>c.link));
+  const order = (a,b)=> (a.tipo===b.tipo?0:a.tipo==='produto'?-1:1) || a.descricao.localeCompare(b.descricao);
+  const prios = [...new Set(vis.map(prioOf))].sort((a,b)=>a-b);
+  const itemBlock = it => {
+    const qs = (it.cotacoes||[]).map((c,i)=>({...c,i})).filter(c=>c.link||c.loja);
+    const q = Number(it.qtde)||1;
+    const lines = qs.length ? qs.map(c=>{
+      const v = Number(c.valor)||0;
+      return `<div class="lk${it.escolhida===c.i?' pick':''}">
+        <div class="lk-main"><span class="lk-loja">${esc(c.loja||'Sem nome')}${it.escolhida===c.i?' <span class="chip ok">escolhida</span>':''}</span>
+        ${c.cond?`<span class="note">${esc(c.cond)}</span>`:''}</div>
+        <div class="lk-val num">${v?`${BRL(v)}${q>1?`<small>× ${q} = ${BRL(v*q)}</small>`:''}`:'<small>sem valor</small>'}</div>
+        ${c.link?`<a class="btn lk-go" href="${esc(c.link)}" target="_blank" rel="noopener">Abrir ↗</a>`:'<span class="lk-go note">sem link</span>'}
+      </div>`;}).join('')
+      : `<button type="button" class="lk-empty" data-open="${esc(it.id)}">Nenhum link ainda<span class="lk-hint"> · adicionar</span></button>`;
+    return `<div class="lkitem"><button type="button" class="lk-head" data-open="${esc(it.id)}"><span class="name">${esc(it.descricao)}${q>1?` <span class="num note">×${q}</span>`:''}</span><span class="note">${it.tipo==='servico'?'serviço':'produto'} · ${esc(it.local||'')}</span></button>${lines}</div>`;
+  };
+  host.innerHTML = `<p class="note" style="margin:0 0 10px">${withLink.length} de ${vis.length} itens com link.<span class="lk-hint"> Toque no nome do item pra adicionar ou editar links.</span></p>` +
+    (prios.length ? prios.map(p=>`<section class="section"><div class="sechead"><span class="swatch" style="background:${PRIO_COLOR(p)}">${p}</span><h2>${PRIO_NAME[p]||'Prioridade '+p}</h2></div>
+      <div class="list">${vis.filter(i=>prioOf(i)===p).sort(order).map(itemBlock).join('')}</div></section>`).join('')
+    : `<div class="list"><div class="empty">Nada com esses filtros.</div></div>`);
+}
+
+let toastT;
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2600); }
+
+async function moveTo(id, newP){
+  const it = byId(id); if(!it || !col || prioOf(it)===newP) return;
+  const old = prioOf(it);
+  const kids = it.tipo==='produto' ? items.filter(s=>s.tipo==='servico' && (s.vinculos||[]).includes(id) && prioOf(s)===old) : [];
+  try{
+    await col.doc(id).update({prioridade:newP});
+    for(const k of kids) await col.doc(k.id).update({prioridade:newP});
+    toast(`${it.descricao}${kids.length?` + ${kids.length} serviço${kids.length>1?'s':''}`:''} → ${PRIO_NAME[newP]||'Prioridade '+newP}`);
+  }catch(err){ toast('Não consegui mover: '+(err.message||err.code)); }
+}
+
+let dragId = null;
+document.addEventListener('dragstart', e=>{ if(window.SNAPSHOT){ e.preventDefault(); return; } const c=e.target.closest?.('.card'); if(!c) return; dragId=c.dataset.id; c.classList.add('dragging'); try{e.dataTransfer.setData('text/plain',dragId); e.dataTransfer.effectAllowed='move';}catch(_){} });
+document.addEventListener('dragend', e=>{ e.target.closest?.('.card')?.classList.remove('dragging'); document.querySelectorAll('.bcol.over').forEach(c=>c.classList.remove('over')); });
+document.addEventListener('dragover', e=>{ const c=e.target.closest?.('.bcol'); if(!c||!dragId) return; e.preventDefault(); document.querySelectorAll('.bcol.over').forEach(x=>x!==c&&x.classList.remove('over')); c.classList.add('over'); });
+document.addEventListener('drop', e=>{ const c=e.target.closest?.('.bcol'); if(!c||!dragId) return; e.preventDefault(); c.classList.remove('over'); const id=dragId; dragId=null; moveTo(id, Number(c.dataset.col)); });
+
+function renderPrioSeg(){
+  document.getElementById('prioSeg').hidden = view==='board';
+  document.querySelectorAll('#viewSeg [data-view]').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.view===view)));
+  const ps = [...new Set(items.map(i=>String(Number(i.prioridade)||5)))].sort();
+  const opts = ['all',...ps];
+  document.getElementById('prioSeg').innerHTML = opts.map(o=>`<button type="button" data-prio="${o}" aria-pressed="${f.prio===o}">${o==='all'?'Todas':'P'+o}</button>`).join('');
+}
+
+function render(){ renderStats(); renderPrioSeg(); renderList(); }
+
+/* ---------- editor ---------- */
+function slug(s){ return (String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'item')+'-'+Math.random().toString(36).slice(2,6); }
+
+function openEditor(id){
+  if(window.SNAPSHOT) return;
+  const base = id ? byId(id) : {descricao:'',local:'',tipo:'produto',qtde:1,prioridade:1,quem:'',estimado:0,pagamento:'parcelado',parcelas:12,status:'a_cotar',obs:'',alerta:'',vinculos:[],cotacoes:[],escolhida:null};
+  if(!base) return;
+  draft = JSON.parse(JSON.stringify(base));
+  draft.cotacoes = draft.cotacoes||[]; draft.vinculos = draft.vinculos||[];
+  delArmed = false;
+  drawEditor();
+  document.getElementById('overlay').hidden = false;
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('e_desc')?.focus(),30);
+}
+function closeEditor(){ document.getElementById('overlay').hidden = true; document.body.style.overflow=''; draft=null; }
+
+function drawEditor(){
+  const d = draft, isNew = !d.id;
+  const prods = items.filter(i=>i.tipo==='produto' && i.id!==d.id).sort((a,b)=>a.descricao.localeCompare(b.descricao));
+  const linkedSvcs = d.id ? items.filter(s=>s.tipo==='servico' && (s.vinculos||[]).includes(d.id)) : [];
+  const q = d.cotacoes;
+  document.getElementById('overlay').innerHTML = `<div class="panel" role="dialog" aria-modal="true" aria-labelledby="e_title">
+    <header><h2 id="e_title">${isNew?'Novo item':esc(d.descricao)}</h2><button type="button" class="x" data-close aria-label="Fechar">✕</button></header>
+    <div class="grid">
+      <label class="full">Descrição<input id="e_desc" value="${esc(d.descricao)}"></label>
+      <label>Local<input id="e_local" value="${esc(d.local)}"></label>
+      <label>Tipo<select id="e_tipo"><option value="produto"${d.tipo==='produto'?' selected':''}>Produto</option><option value="servico"${d.tipo==='servico'?' selected':''}>Serviço</option></select></label>
+      <label>Quantidade<input id="e_qtde" type="number" min="0" step="1" inputmode="numeric" value="${esc(d.qtde)}"></label>
+      <label>Prioridade<select id="e_prio">${[1,2,3,4].map(p=>`<option value="${p}"${Number(d.prioridade)===p?' selected':''}>${p} · ${PRIO_NAME[p]}</option>`).join('')}</select></label>
+      <label>Quem (fornece / executa)<input id="e_quem" value="${esc(d.quem)}"></label>
+      <label>Valor estimado (unitário)<input id="e_est" type="number" min="0" step="0.01" inputmode="decimal" value="${esc(d.estimado)}"></label>
+    </div>
+
+    <fieldset><legend>Cotações</legend>
+      <p class="note" style="margin:0">Marque a cotação que vale. O valor dela substitui o estimado e o item conta como comprovado.</p>
+      ${q.map((c,i)=>`<div class="quote">
+        <input type="radio" name="e_pick" value="${i}"${d.escolhida===i?' checked':''} aria-label="Usar esta cotação">
+        <input data-q="${i}" data-k="loja" placeholder="Loja / prestador" value="${esc(c.loja)}">
+        <input data-q="${i}" data-k="valor" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Valor unit." value="${esc(c.valor)}">
+        <button type="button" class="x" data-delq="${i}" aria-label="Remover cotação">✕</button>
+        <input class="wide" data-q="${i}" data-k="link" type="url" placeholder="Link do produto ou orçamento" value="${esc(c.link)}">
+        <input class="wide" data-q="${i}" data-k="cond" placeholder="Condição: ex. 10x sem juros no cartão, 5% off no Pix" value="${esc(c.cond)}">
+        ${c.link?`<a class="wide note" href="${esc(c.link)}" target="_blank" rel="noopener">Abrir link ↗</a>`:''}
+      </div>`).join('')}
+      <div><button type="button" class="btn" data-addq>+ Adicionar cotação</button>${d.escolhida!=null&&d.escolhida>=0?` <button type="button" class="btn" data-unpick>Voltar ao estimado</button>`:''}</div>
+    </fieldset>
+
+    <fieldset><legend>Pagamento</legend>
+      <div class="grid">
+        <label>Forma<select id="e_pag">${Object.entries(PAG).map(([k,v])=>`<option value="${k}"${d.pagamento===k?' selected':''}>${v}</option>`).join('')}</select></label>
+        <label>Nº de parcelas<input id="e_parc" type="number" min="1" step="1" inputmode="numeric" value="${esc(d.parcelas)}"${d.pagamento==='parcelado'?'':' disabled'}></label>
+      </div>
+      <div class="calc" id="e_calc"></div>
+    </fieldset>
+
+    <fieldset><legend>${d.tipo==='servico'?'Serviço ligado a quais produtos?':'Serviços ligados'}</legend>
+      ${d.tipo==='servico'
+        ? (prods.length?`<div class="links">${prods.map(p=>`<label><input type="checkbox" data-link="${esc(p.id)}"${d.vinculos.includes(p.id)?' checked':''}>${esc(p.descricao)}</label>`).join('')}</div>`:'<p class="note">Nenhum produto cadastrado.</p>')
+        : (linkedSvcs.length?`<ul style="margin:0;padding-left:18px">${linkedSvcs.map(s=>`<li>${esc(s.descricao)} — <span class="num">${BRL(total(s))}</span></li>`).join('')}</ul><div class="calc">Produto + serviços: <b>${BRL(total(d)+linkedSvcs.reduce((a,s)=>a+total(s),0))}</b></div>`:'<p class="note" style="margin:0">Nenhum serviço ligado. Pra ligar, abra o serviço (ex.: instalação) e marque este produto.</p>')}
+    </fieldset>
+
+    <div class="grid">
+      <label>Status<select id="e_status">${Object.entries(STATUS).map(([k,v])=>`<option value="${k}"${(d.status||'a_cotar')===k?' selected':''}>${v}</option>`).join('')}</select></label>
+      <label class="full">Observações<textarea id="e_obs">${esc(d.obs)}</textarea></label>    </div>
+    <p class="note" id="e_err" role="alert" style="color:var(--p1)"></p>
+    <div class="actions">
+      <div>${isNew?'':`<button type="button" class="btn danger" data-del>${delArmed?'Confirmar exclusão':'Excluir'}</button>`}</div>
+      <div style="display:flex;gap:8px"><button type="button" class="btn" data-close>Cancelar</button><button type="button" class="btn primary" data-save>Salvar</button></div>
+    </div>
+  </div>`;
+  updateCalc();
+}
+
+function readForm(){
+  const v = id => document.getElementById(id)?.value ?? '';
+  draft.descricao = v('e_desc').trim(); draft.local = v('e_local').trim();
+  draft.tipo = v('e_tipo'); draft.qtde = Number(v('e_qtde'))||0; draft.prioridade = Number(v('e_prio'))||5;
+  draft.quem = v('e_quem').trim(); draft.estimado = Number(v('e_est'))||0;
+  draft.pagamento = v('e_pag'); draft.parcelas = draft.pagamento==='parcelado' ? (Number(v('e_parc'))||1) : '';
+  draft.status = v('e_status'); draft.obs = v('e_obs');
+}
+function updateCalc(){
+  const el = document.getElementById('e_calc'); if(!el||!draft) return;
+  const t = total(draft), n = Number(draft.parcelas)||0;
+  el.innerHTML = `Unitário <b>${BRL(unit(draft))}</b> Total <b>${BRL(t)}</b>${draft.pagamento==='parcelado'&&n?` Parcela <b>${n}x ${BRL(t/n)}</b>`:''}`;
+}
+
+const ov = document.getElementById('overlay');
+ov.addEventListener('input', e=>{
+  const t = e.target;
+  if(t.dataset.q!=null){ const c = draft.cotacoes[+t.dataset.q]; c[t.dataset.k] = t.dataset.k==='valor' ? (t.value===''?'':Number(t.value)) : t.value; }
+  else if(t.dataset.link){ const id=t.dataset.link; draft.vinculos = t.checked ? [...new Set([...draft.vinculos,id])] : draft.vinculos.filter(x=>x!==id); }
+  else if(t.name==='e_pick'){ draft.escolhida = Number(t.value); }
+  else readForm();
+  if(t.id==='e_pag'){ document.getElementById('e_parc').disabled = t.value!=='parcelado'; readForm(); }
+  updateCalc();
+});
+ov.addEventListener('change', e=>{ if(e.target.id==='e_tipo'){ readForm();
+  if(draft.tipo==='produto'){ draft.pagamento='parcelado'; draft.parcelas=12; } else { draft.pagamento='avista'; draft.parcelas=''; }
+  drawEditor(); } });
+ov.addEventListener('click', async e=>{
+  if(e.target===ov || e.target.closest('[data-close]')) return closeEditor();
+  if(e.target.closest('[data-addq]')){ readForm(); draft.cotacoes.push({loja:'',valor:'',link:'',cond:''}); if(draft.cotacoes.length===1) draft.escolhida=0; drawEditor(); return; }
+  if(e.target.closest('[data-unpick]')){ readForm(); draft.escolhida=null; drawEditor(); return; }
+  const dq = e.target.closest('[data-delq]');
+  if(dq){ readForm(); const i=+dq.dataset.delq; draft.cotacoes.splice(i,1);
+    if(draft.escolhida===i) draft.escolhida=null; else if(draft.escolhida>i) draft.escolhida--; drawEditor(); return; }
+  if(e.target.closest('[data-del]')){
+    if(!delArmed){ readForm(); delArmed=true; drawEditor(); return; }
+    try{ await col.doc(draft.id).delete(); closeEditor(); }catch(err){ document.getElementById('e_err').textContent='Não consegui excluir: '+(err.message||err.code); }
+    return; }
+  if(e.target.closest('[data-save]')){
+    readForm();
+    if(!draft.descricao){ document.getElementById('e_err').textContent='Dê um nome ao item.'; return; }
+    if(!col){ document.getElementById('e_err').textContent='Sem conexão com a lista salva. Abra a página pelo claude.ai.'; return; }
+    const btn = e.target.closest('[data-save]'); btn.disabled = true; btn.textContent='Salvando…';
+    const id = draft.id || slug(draft.descricao);
+    const {id:_, ...body} = draft;
+    body.cotacoes = body.cotacoes.filter(c=>c.loja||c.valor!==''||c.link);
+    if(typeof body.escolhida!=='number' || !body.cotacoes[body.escolhida]) body.escolhida = null;
+    if(body.escolhida!==null && body.status==='a_cotar') body.status='cotado';
+    try{ await col.doc(id).set(body); closeEditor(); }
+    catch(err){ btn.disabled=false; btn.textContent='Salvar'; document.getElementById('e_err').textContent='Não salvou: '+(err.message||err.code); }
+  }
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape' && !ov.hidden) closeEditor();
+  if(e.key==='Enter' && e.target.classList?.contains('card')) openEditor(e.target.dataset.open);
+});
+
+document.addEventListener('click', e=>{
+  const mv = e.target.closest('[data-move]');
+  if(mv){ if(mv.dataset.to) moveTo(mv.dataset.move, Number(mv.dataset.to)); return; }
+  const vb = e.target.closest('[data-view]');
+  if(vb){ view = vb.dataset.view; try{localStorage.setItem('lm_view',view);}catch(_){} render(); return; }
+  const o = e.target.closest('[data-open]'); if(o && !ov.contains(o)) openEditor(o.dataset.open);
+  const p = e.target.closest('[data-prio]'); if(p){ f.prio=p.dataset.prio; render(); }
+});
+document.getElementById('addBtn').addEventListener('click', ()=>openEditor(null));
+[['tipoSel','tipo'],['pagSel','pag'],['statusSel','status']].forEach(([id,k])=>document.getElementById(id).addEventListener('change',e=>{f[k]=e.target.value; renderList();}));
+
+/* ---------- dados ---------- */
+(async()=>{
+  const msg = document.getElementById('loadMsg');
+  if(window.SNAPSHOT){
+    items = window.SNAPSHOT.items.map(x=>({id:x.id,...x.d})); loaded = true;
+    document.body.classList.add('ro');
+    document.getElementById('subTxt').textContent = 'Versão para consulta, atualizada em '+window.SNAPSHOT.data+'. Toque em "Links" pra ver onde comprar.';
+    render(); return;
+  }
+  const db =window.claude?.use ? await window.claude.use('db') : null;
+  if(!db){ msg.textContent='Abra esta página pelo claude.ai (logado) pra carregar a lista salva.'; return; }
+  col = db.collection('itens');
+  const timer = setTimeout(()=>{ if(!loaded) msg.textContent='A lista ainda não respondeu. Verifique a conexão; ela aparece sozinha quando voltar.'; },10000);
+  col.onSnapshot(snap=>{
+    items = snap.docs.map(d=>({id:d.id,...d.data()}));
+    if(!snap.metadata.fromCache){ loaded = true; clearTimeout(timer); }
+    else if(items.length) loaded = true;
+    render();
+  }, err=>{ clearTimeout(timer); msg.textContent='Não foi possível carregar a lista ('+err.code+').'; });
+})();
+</script>
+</body></html>
