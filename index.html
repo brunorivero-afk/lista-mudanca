@@ -211,7 +211,7 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
 <div class="overlay" id="overlay" hidden></div>
 <div class="toast" id="toast" role="status" hidden></div>
 
-<script>window.SNAPSHOT={data:"10/11/2026",items:[{"id":"cabeceira","d":{
+<script>window.SNAPSHOT={data:"23/11/2026",items:[{"id":"cabeceira","d":{
   "alerta": "",
   "cotacoes": [
     {
@@ -281,7 +281,7 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "obs": "",
   "pagamento": "avista",
   "parcelas": "",
-  "prioridade": 1,
+  "prioridade": 2,
   "qtde": 1,
   "quem": "",
   "status": "a_cotar",
@@ -298,7 +298,7 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "obs": "",
   "pagamento": "avista",
   "parcelas": "",
-  "prioridade": 1,
+  "prioridade": 2,
   "qtde": 16,
   "quem": "",
   "status": "a_cotar",
@@ -308,19 +308,21 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
 },{"id":"descarga","d":{
   "alerta": "",
   "cotacoes": [],
-  "descricao": "Vaso Sanitário (edílica)",
+  "descricao": "Instalação do vaso sanitário (edícula)",
   "escolhida": null,
   "estimado": 300,
-  "local": "Banheiros",
-  "obs": "Peça incluída nos R$ 300.",
+  "local": "Edícula",
+  "obs": "",
   "pagamento": "avista",
   "parcelas": "",
-  "prioridade": 2,
+  "prioridade": 1,
   "qtde": 1,
   "quem": "Marido Adriana",
   "status": "a_cotar",
   "tipo": "servico",
-  "vinculos": []
+  "vinculos": [
+    "vaso-edicula"
+  ]
 }
 },{"id":"eletricista","d":{
   "alerta": "",
@@ -332,7 +334,7 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "obs": "",
   "pagamento": "avista",
   "parcelas": "",
-  "prioridade": 1,
+  "prioridade": 2,
   "qtde": 7,
   "quem": "Virgílio",
   "status": "a_cotar",
@@ -389,6 +391,36 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "tipo": "servico",
   "vinculos": []
 }
+},{"id":"impermeabilizante-muro","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Preço visto em 10/11 (conferir)",
+      "link": "https://www.amazon.com.br/dp/B077TT6VN7",
+      "loja": "Amazon — Tecplus Top 18kg (argamassa polimérica, equivale ao Vedatop)",
+      "valor": 65.52
+    },
+    {
+      "cond": "",
+      "link": "https://lista.mercadolivre.com.br/vedatop-18kg",
+      "loja": "Mercado Livre — Vedatop 18kg (busca)",
+      "valor": ""
+    }
+  ],
+  "descricao": "Impermeabilizante (argamassa polimérica 18kg)",
+  "escolhida": null,
+  "estimado": 110,
+  "local": "Muro — área com infiltração",
+  "obs": "Tratar a infiltração antes de pintar (~30–50% do muro, principalmente a base). 2 a 3 caixas tipo Vedatop/Viapol. Estimativa: R$ 90–130 cada.",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 2,
+  "qtde": 3,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
 },{"id":"inst-ar","d":{
   "alerta": "",
   "cotacoes": [],
@@ -399,7 +431,7 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "obs": "Os 2 aparelhos já estão comprados.",
   "pagamento": "avista",
   "parcelas": "",
-  "prioridade": 1,
+  "prioridade": 2,
   "qtde": 2,
   "quem": "Mineiro",
   "status": "a_cotar",
@@ -414,8 +446,8 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "estimado": 1500,
   "local": "Quarto casal / edícula / sala",
   "obs": "",
-  "pagamento": "avista",
-  "parcelas": "",
+  "pagamento": "parcelado",
+  "parcelas": 12,
   "prioridade": 1,
   "qtde": 1,
   "quem": "Marido Adriana",
@@ -464,6 +496,42 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
     "suporte-tv"
   ]
 }
+},{"id":"kit-pintura-muro","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Somar 1 rolo de lã extra, lixas e fita",
+      "link": "https://www.amazon.com.br/dp/B0HD2D67KF",
+      "loja": "Amazon — Kit Atlas 6 peças com extensor (bandeja, trincha, rolos)",
+      "valor": 77.71
+    },
+    {
+      "cond": "Se o extensor do kit for curto para o muro",
+      "link": "https://www.amazon.com.br/dp/B0HC49B632",
+      "loja": "Amazon — Cabo extensor telescópico Atlas 2m",
+      "valor": 66.49
+    },
+    {
+      "cond": "",
+      "link": "https://lista.mercadolivre.com.br/kit-pintura-rolo-la-23cm",
+      "loja": "Mercado Livre — kit pintura rolo de lã 23cm (busca)",
+      "valor": ""
+    }
+  ],
+  "descricao": "Kit de pintura e acessórios",
+  "escolhida": null,
+  "estimado": 200,
+  "local": "Edícula e muro",
+  "obs": "2 rolos de lã alta (superfície rugosa), cabo extensor, pincéis/trinchas, bandejas, lixas grossas e fita crepe. Estimativa: R$ 150–250.",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 1,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
 },{"id":"lampadas","d":{
   "alerta": "",
   "cotacoes": [
@@ -487,7 +555,7 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "obs": "",
   "pagamento": "parcelado",
   "parcelas": 12,
-  "prioridade": 1,
+  "prioridade": 2,
   "qtde": 6,
   "quem": "",
   "status": "a_cotar",
@@ -553,7 +621,7 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "obs": "",
   "pagamento": "parcelado",
   "parcelas": 12,
-  "prioridade": 1,
+  "prioridade": 2,
   "qtde": 5,
   "quem": "",
   "status": "a_cotar",
@@ -600,7 +668,7 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "obs": "",
   "pagamento": "avista",
   "parcelas": "",
-  "prioridade": 1,
+  "prioridade": 2,
   "qtde": 1,
   "quem": "Marido Adriana",
   "status": "a_cotar",
@@ -611,23 +679,29 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "alerta": "Metragem aproximada (cerca de 40 m²): medir antes de comprar. Quem compra ainda está como '?'.",
   "cotacoes": [
     {
-      "cond": "R$ 85,90/m² em promoção (busca 10/11, conferir). Comprar ~10% a mais pra perdas",
-      "link": "https://produto.mercadolivre.com.br/MLB-3109990855-piso-vinilico-rigido-4mm-clicado-regua-por-m-tubrax-_JM",
-      "loja": "Mercado Livre — Tubrax rígido 4 mm clicado (por m²)",
-      "valor": 85.9
+      "cond": "R$ 26,10/m² (busca 23/11, conferir). Cola à parte",
+      "link": "https://lista.mercadolivre.com.br/piso-vinilico-manta",
+      "loja": "Mercado Livre — manta vinílica 0,7 mm rolo 2x7 m (14 m²)",
+      "valor": 26.1
     },
     {
-      "cond": "De R$ 85 a R$ 255 por m² conforme marca",
-      "link": "https://lista.mercadolivre.com.br/piso-vinilico-click",
-      "loja": "Mercado Livre — piso vinílico click (lista)",
+      "cond": "R$ 27,53/m² (busca 23/11, conferir). Um rolo só quase cobre os 40 m²",
+      "link": "https://lista.mercadolivre.com.br/manta-vinilica",
+      "loja": "Mercado Livre — manta amadeirada rolo 18x2 m (36 m²)",
+      "valor": 27.53
+    },
+    {
+      "cond": "Escolha a cor; conferir preço por m²",
+      "link": "https://produto.mercadolivre.com.br/MLB-1570736005-piso-vinil-tipo-laminado-madeirado-rolo-2x10mt-escolha-a-cor-_JM",
+      "loja": "Mercado Livre — manta amadeirada rolo 2x10 m (20 m²)",
       "valor": ""
     }
   ],
-  "descricao": "Piso vinílico",
+  "descricao": "Piso vinílico em manta (até R$ 30/m²)",
   "escolhida": null,
-  "estimado": 100,
+  "estimado": 30,
   "local": "Quarto casal / edícula / sala",
-  "obs": "Quantidade em m². Estimado mantido em R$ 4.000 no total (R$ 100/m²).",
+  "obs": "Quantidade em m² (cerca de 40, medir). Teto de R$ 30/m²: só a manta 0,7 mm cabe; régua vinílica começa em ~R$ 36/m². Cola costuma ser à parte. Comprar ~10% a mais.",
   "pagamento": "parcelado",
   "parcelas": 12,
   "prioridade": 1,
@@ -684,6 +758,36 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "tipo": "servico",
   "vinculos": []
 }
+},{"id":"selador-muro","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Preço visto em 10/11 (conferir)",
+      "link": "https://www.amazon.com.br/dp/B0HCRM4SDR",
+      "loja": "Amazon — Selador acrílico 18L para parede, reboco e alvenaria",
+      "valor": 180.4
+    },
+    {
+      "cond": "",
+      "link": "https://lista.mercadolivre.com.br/selador-acrilico-18-litros",
+      "loja": "Mercado Livre — selador acrílico 18L (busca)",
+      "valor": ""
+    }
+  ],
+  "descricao": "Selador acrílico exterior 18L",
+  "escolhida": null,
+  "estimado": 135,
+  "local": "Muro (200 m²)",
+  "obs": "1 demão antes da tinta. 1 lata rende 150–200 m². Estimativa: R$ 110–160.",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 2,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
 },{"id":"suporte-tv","d":{
   "alerta": "",
   "cotacoes": [
@@ -737,18 +841,18 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "obs": "",
   "pagamento": "parcelado",
   "parcelas": 12,
-  "prioridade": 1,
+  "prioridade": 2,
   "qtde": 1,
   "quem": "",
   "status": "a_cotar",
   "tipo": "produto",
   "vinculos": []
 }
-},{"id":"tinta-parede","d":{
+},{"id":"tinta-edicula","d":{
   "alerta": "",
   "cotacoes": [
     {
-      "cond": "Interna/externa, até 170 m². A partir de 12x de R$ 41,31 (conferir)",
+      "cond": "Interna/externa. A partir de 12x de R$ 41,31 (busca 10/11, conferir)",
       "link": "https://www.mercadolivre.com.br/tinta-acrilica-fosca-rende-muito-coral-18l-branco-standard/p/MLB27632051",
       "loja": "Mercado Livre — Coral Rende Muito 18L branco",
       "valor": 427.9
@@ -760,15 +864,45 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
       "valor": ""
     }
   ],
-  "descricao": "Tinta para parede",
+  "descricao": "Tinta para a edícula 18L",
   "escolhida": null,
-  "estimado": 500,
-  "local": "Muro / edícula / muro da piscina",
-  "obs": "",
+  "estimado": 428,
+  "local": "Edícula",
+  "obs": "1 lata de 18L rende até ~170 m² por demão. Medir a edícula e escolher a cor.",
   "pagamento": "parcelado",
   "parcelas": 12,
   "prioridade": 1,
   "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"tinta-parede","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "Premium, cinza chumbo pronta. Preço visto em 10/11 (conferir)",
+      "link": "https://www.amazon.com.br/dp/B0B5YJLXFL",
+      "loja": "Amazon — Lukscolor Premium Plus Cinza Chumbo 18L",
+      "valor": 581.17
+    },
+    {
+      "cond": "Comparar marcas premium (Suvinil, Coral, Lukscolor) em 18L",
+      "link": "https://lista.mercadolivre.com.br/tinta-acrilica-cinza-chumbo-18-litros",
+      "loja": "Mercado Livre — tinta acrílica cinza chumbo 18L (busca)",
+      "valor": ""
+    }
+  ],
+  "descricao": "Tinta acrílica premium cinza chumbo 18L",
+  "escolhida": null,
+  "estimado": 430,
+  "local": "Muro (200 m²)",
+  "obs": "200 m² de muro, 2 a 3 demãos = 40 a 60 L → 3 latas de 18L (54L, com margem para retoque). Estimativa: R$ 380–480 por lata.",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 2,
+  "qtde": 3,
   "quem": "",
   "status": "a_cotar",
   "tipo": "produto",
@@ -804,6 +938,42 @@ legend{font-weight:700;font-family:var(--display);padding:0 6px}
   "pagamento": "parcelado",
   "parcelas": 12,
   "prioridade": 2,
+  "qtde": 1,
+  "quem": "",
+  "status": "a_cotar",
+  "tipo": "produto",
+  "vinculos": []
+}
+},{"id":"vaso-edicula","d":{
+  "alerta": "",
+  "cotacoes": [
+    {
+      "cond": "12x de R$ 57,49 sem juros (busca 23/11, conferir)",
+      "link": "https://www.amazon.com.br/kit-vaso-sanitario-acoplado/s?k=kit+vaso+sanitario+acoplado",
+      "loja": "Amazon — kit City Celite com caixa acoplada",
+      "valor": 689.88
+    },
+    {
+      "cond": "12x de R$ 62,48 sem juros (busca 23/11, conferir)",
+      "link": "https://www.mercadolivre.com.br/vaso-sanitario-caixa-acoplada-design-slim-vivaz-kit-completo/p/MLB61127436",
+      "loja": "Mercado Livre — Vivaz monobloco kit completo",
+      "valor": 749.76
+    },
+    {
+      "cond": "Várias marcas",
+      "link": "https://lista.mercadolivre.com.br/kit-vaso-sanitario-com-caixa-acoplada-e-assento",
+      "loja": "Mercado Livre — kit vaso com caixa acoplada e assento (lista)",
+      "valor": ""
+    }
+  ],
+  "descricao": "Vaso sanitário com caixa acoplada (edícula)",
+  "escolhida": null,
+  "estimado": 690,
+  "local": "Edícula",
+  "obs": "Conferir se o kit vem com assento, anel de vedação e flexível.",
+  "pagamento": "parcelado",
+  "parcelas": 12,
+  "prioridade": 1,
   "qtde": 1,
   "quem": "",
   "status": "a_cotar",
